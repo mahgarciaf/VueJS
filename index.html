@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aprendendo Vue.JS</title>
+    <script src="./vue.js"></script>
+
+    <style>
+    /* ATRIBUTOS */
+        /* .verde {
+            color: green;
+        }
+        .negrito {
+            font-weight: bold;
+        } */
+
+    /* CONDICIONAL */
+        /* .verde {
+            background-color: green;
+        }
+        .azul {
+            background-color: blue;
+        } */
+
+
+        .verde {
+            background-color: green;
+        }
+        .azul {
+            background-color: blue;
+        }
+        .branco {
+            background-color: white;
+        }
+        .vermelho {
+            background-color: red;
+        }
+        .borda {
+            border: 1px solid;
+        }
+        .principal {
+            width: 200px;
+            height: 200px;
+        }
+        .comum {
+            width: 50px;
+            height: 50px;
+            display: inline-block;
+        }
+
+    </style>
+
+</head>
+<body>
+    <!-- double mustache -> as chaves duplas pega o conteúdo do objeto vue e exibe no html
+    conecta a aplicação, o meu elemento com a página -->
+
+<!-- IMPLEMENTANDO DADOS -->
+    <!-- <div id="app">
+        {{ mensagem }} <br>
+        Valor total: {{ valorTotal }} <br>
+        Logado: {{ logado }} <br>
+        Hobbies: {{ hobbies[1] }} <br>
+        Perfil: {{ perfil.nome }} <br>
+        Cursos: {{ perfil.cursos[0].nome }}
+    </div> -->
+        
+    
+<!-- MÉTODOS -->
+    <!-- <div id="app">
+        {{ somar() }} <br>
+        {{ subtrair() }} <br>
+        {{ multiplicar() }} <br>
+        {{ multi() }} <br>
+        {{ dividir() }} <br>
+    </div> -->
+        
+
+<!-- ATRIBUTOS -->
+    <!-- <div id="app">
+        <a v-bind:href="site">Site</a>
+        <p :class="cor" class="negrito">Entendendo a diretiva v-bind</p>
+        <input type="text" v-bind:placeholder="instrucaoPreenchimento">
+        <input type="checkbox" v-bind:checked="check">
+    </div> -->
+<!-- colocar o v-bind:class ou só :class é a mesma coisa -->
+
+
+<!-- CONDICIONAL -->
+    <!-- <div id="app">
+        {{ mensagem }} {{ mensagem.length }}
+        <input :value="mensagem" :class="teste ? 'verde' : estilo">
+    </div> -->
+
+
+<!-- EVENTOS -->
+    <!-- <div id="app">
+        <input type="text" v-on:keyup="imprimirTexto('Enviando parâmetro',5)">
+        <input type="text" v-on:keyup="imprimirEvento($event)">
+        <button @click="mensagemAlerta($event)">Botão</button>
+    </div> -->
+<!-- colocar v-on:click ou @click é a mesma coisa -->
+<!-- o @ lê-se como sugar -->
+
+
+    <div id="app">
+        <div class="borda principal" :class="cor">
+            Cor: {{ cor }}
+            <br>
+            Posição X do mouse: {{ posicaoX }}
+            <br>
+            Posição Y do mouse: {{ posicaoY }}
+        </div>
+        <div class="borda comum" @click="mudarCor('verde')"></div>
+        <div 
+            class="borda comum" 
+            @mouseover="mudarCor('azul')"
+            @mouseout="mudarCor('vermelho')"
+        ></div>
+        <div 
+            class="borda comum"
+            @mousemove="coordenadas($event)"
+        ></div>
+    </div>
+
+
+    <script>
+// //  PRIMEIRO EXEMPLO
+//         option = {
+//             // elemento que eu quero me referir
+//             el: "#app",
+//             data: { //onde eu vou colocar minhas variáveis
+//                 mensagem: "Primeiro template controlado pelo Vue"
+//             }            
+//         };
+//         const vm = new Vue(option);
+//         console.log(vm);
+
+// //  IMPLEMENTANDO DADOS
+//         const vm = new Vue({
+//             el: "#app",
+//             data: {
+//                 mensagem: "Primeiro template controlado pelo Vue",
+//                 valorTotal: 150.47,
+//                 logado: true,
+//                 hobbies: ["fotografia","bicicleta"],
+//                 perfil: {
+//                     nome: "Marielle Garcia",
+//                     site: "marielle.org.br",
+//                     idade: 22,
+//                     cursos: [
+//                         {
+//                             nome: "Vai na Web - Front End",
+//                             cargaHoraria:"80 horas"
+//                         },
+//                         {
+//                             nome: "ADS - tecnólogo",
+//                             cargaHoraria:"3 anos"
+//                         }
+//                     ]
+//                 }
+//             }   
+//         });
+
+// //  MÉTODOS
+//         const vm = new Vue({
+//             el: "#app",
+//             data: {
+//                 n1: 10,
+//                 n2: 5,
+//             },
+//             methods: {
+//                 somar: function somar() {
+//                     return this.n1 + this.n2;
+//                 },
+//                 subtrair: function () {
+//                     return this.n1 - this.n2;
+//                 },
+//                 multiplicar: () => {
+//                     console.log(this);
+//                     return this.n1 * this.n2;
+//                 //     // NaN -> not a number
+//                 //     // em uma arrow function, o this.n1 não existe, ele puxa os elementos do document
+//                 // a arrow function toma como o elemento sempre quem estiver superior a ela
+//                 // nesse caso, o this é o Window
+//                 },
+//                 multi: () => this.n1 * this.n2,
+//                 dividir () {
+//                     let f = () => {
+//                         console.log("****", this);
+//                         return "teste";
+//                         // nesse caso, o this é o Vue
+//                     }
+//                     console.log( f() );
+//                     console.log(this);
+//                     return this.n1 / this.n2;
+//                 }
+//             }   
+//         });
+
+
+// //  ATRIBUTO (?)
+//         const vm = new Vue({
+//             el: "#app",
+//             data: {
+//                 site: "https://vuejs.org",
+//                 cor: "verde", //classes atribuídas por vue ficam por último, pois são renderizadas posteriormente
+//                 instrucaoPreenchimento: "Nome completo",
+//                 check: true,
+//             },
+//             methods: {}
+//         });
+
+
+// //  CONDICIONAL
+//         const vm = new Vue({
+//             el: "#app",
+//             data: {
+//                 mensagem: "Expressão",
+//                 estilo: "azul",
+//                 teste: false,
+//             },
+//             methods: {}
+//         });
+
+
+// //  EVENTOS
+//         const vm = new Vue({
+//             el: "#app",
+//             data: {},
+//             methods: {
+//                 imprimirTexto(texto, num) {
+//                     console.log(texto);
+//                     console.log(num);
+//                 },
+//                 imprimirEvento(texto) {
+//                     console.log(texto)
+//                 },
+//                 // mensagemAlerta() {
+//                 //     alert("Mensagem de alerta");
+//                 // },
+//                 mensagemAlerta(evento) {
+//                     console.log(evento);
+//                 }
+//             }
+//         });
+
+//  ?
+        const vm = new Vue({
+            el: "#app",
+            data: {
+                cor: "branco",
+                posicaoX: 0,
+                posicaoY: 0,
+            },
+            methods: {
+                mudarCor(c) {
+                    this.cor = c;
+                },
+                coordenadas(evento) {
+                    this.posicaoX = evento.clientX;
+                    this.posicaoY = evento.clientY;
+                    console.log(evento)
+                }
+            }
+        });
+
+
+
+
+        console.log(vm);
+    </script>
+
+</body>
+</html>
